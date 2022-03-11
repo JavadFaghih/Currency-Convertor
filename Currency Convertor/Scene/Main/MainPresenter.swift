@@ -7,11 +7,12 @@
 //
 
 import UIKit
+import RealmSwift
 
 protocol MainPresenterDelegate: AnyObject {
  
-    func displayItemList(viewModel: Main.Models.ViewModel)
     func displayError(message: String)
+    func displayBalanceItem(_ items: [Main.Models.ViewModel])
 }
 
 typealias MainPresenterInput = MaininteractorDelegate
@@ -22,6 +23,18 @@ class MainPresenter: MainPresenterInput {
   
     func presentError(message: String) {
         viewController?.displayError(message: message)
+    }
+    
+    func presentMyBalances(balance: Results<UserBalance>) {
+        for item in balance {
+            
+            var balances: [Main.Models.ViewModel] = []
+            
+            for currency in item.currencies {
+                balances.append(Main.Models.ViewModel(amount: String(currency.Amount), symbol: currency.Symbol))
+            }
+            viewController?.displayBalanceItem(balances)
+        }
     }
     
 }

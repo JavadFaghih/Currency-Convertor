@@ -30,6 +30,7 @@ class MainViewController: UIViewController {
     private var sellPickerView: UIPickerView!
     private var recievePickerView: UIPickerView!
     private var CurrenySymbolls: [String] = CurrencySymbol.allCases.map { $0.rawValue }
+    private var balances: [Main.Models.ViewModel] = []
     
   // MARK: Object lifecycle
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -78,6 +79,9 @@ class MainViewController: UIViewController {
       buyAmountField.setLeftTitle(text: "Receive")
       hiddenKeyboardWhenTapRound()
       configNavBar()
+      
+      sellCurrencySymbolField.text = CurrenySymbolls[1]
+      receiveCurrencySymbolField.text = CurrenySymbolls[0]
   }
     
     override func viewDidLayoutSubviews() {
@@ -104,7 +108,7 @@ class MainViewController: UIViewController {
     }
     
      //MARK: - Methods
-    private func alert(title: String = "", message: String) {
+    private func alert(title: String = "Oops!", message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let done = UIAlertAction(title: "Done", style: .default)
         alert.addAction(done)
@@ -126,8 +130,9 @@ class MainViewController: UIViewController {
      //MARK: - Presenter Delegate
 extension MainViewController: MainViewControllerInput {
    
-    func displayItemList(viewModel: Main.Models.ViewModel) {
-        
+    func displayBalanceItem(_ items: [Main.Models.ViewModel]) {
+        self.balances = items
+        collectionView.reloadData()
     }
     
     func displayError(message: String) {
@@ -139,13 +144,13 @@ extension MainViewController: MainViewControllerInput {
  //MARK: - CollectionViewDelegate
 extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        20
+        self.balances.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MyBallanceCollectionViewCell.reuseIdentifier, for: indexPath) as? MyBallanceCollectionViewCell else { return UICollectionViewCell()}
         
-        cell.myBallance = "45"
+        cell.myBallance = balances[indexPath.row]
         
         return cell
     }

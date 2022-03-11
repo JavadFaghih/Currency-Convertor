@@ -12,10 +12,12 @@ class MyBallanceCollectionViewCell: UICollectionViewCell {
     static let reuseIdentifier: String = "MyBallanceCollectionViewCell"
 
     @IBOutlet weak var myBallanceLabel: UILabel!
+    @IBOutlet weak var symbolLabel: UILabel!
     
-    var myBallance: String? {
+    var myBallance: Main.Models.ViewModel? {
         didSet {
-            myBallanceLabel.text = myBallance
+            myBallanceLabel.text = myBallance?.amount ?? ""
+            symbolLabel.text = myBallance?.symbol ?? ""
         }
     }
     

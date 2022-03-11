@@ -7,7 +7,6 @@
 
 import Foundation
 
-//for add currency just write a new symbol to this enum, it will used in whole app
 enum CurrencySymbol: String, CaseIterable {
     case EUR
     case USD
