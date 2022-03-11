@@ -17,10 +17,11 @@ enum Main {
    
     
     }
-      struct Response {
-   
-    
-    }
+      // MARK: - ExchangeResponse
+      struct ExchangeResponse: Codable {
+          let amount, currency: String
+      }
+
    
       struct ViewModel {
    

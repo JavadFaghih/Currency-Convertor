@@ -11,6 +11,7 @@ import UIKit
 protocol MainPresenterDelegate: AnyObject {
  
     func displayItemList(viewModel: Main.Models.ViewModel)
+    func displayError(message: String)
 }
 
 typealias MainPresenterInput = MaininteractorDelegate
@@ -19,10 +20,8 @@ class MainPresenter: MainPresenterInput {
  
     weak var viewController: MainPresenterDelegate?
   
-  // MARK: Do something
-  func presentSomething(response: Main.Models.Response) {
-  
-      let viewModel = Main.Models.ViewModel()
-    viewController?.displayItemList(viewModel: viewModel)
-  }
+    func presentError(message: String) {
+        viewController?.displayError(message: message)
+    }
+    
 }

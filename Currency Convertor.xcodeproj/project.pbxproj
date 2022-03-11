@@ -16,10 +16,18 @@
 		4D323F7927DA071A007E4414 /* RoundImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D323F7827DA071A007E4414 /* RoundImage.swift */; };
 		4D323F8027DA1101007E4414 /* MainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D323F7A27DA1101007E4414 /* MainPresenter.swift */; };
 		4D323F8127DA1101007E4414 /* MainWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D323F7B27DA1101007E4414 /* MainWorker.swift */; };
-		4D323F8227DA1101007E4414 /* MainRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D323F7C27DA1101007E4414 /* MainRouter.swift */; };
 		4D323F8327DA1101007E4414 /* MainModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D323F7D27DA1101007E4414 /* MainModels.swift */; };
 		4D323F8427DA1101007E4414 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D323F7E27DA1101007E4414 /* MainViewController.swift */; };
 		4D323F8527DA1101007E4414 /* MainInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D323F7F27DA1101007E4414 /* MainInteractor.swift */; };
+		4D323F8727DA1EBB007E4414 /* CusstomTextfield.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D323F8627DA1EBB007E4414 /* CusstomTextfield.swift */; };
+		4D323F8A27DA3557007E4414 /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D323F8927DA3557007E4414 /* UIImageExtension.swift */; };
+		4D323F8D27DA361F007E4414 /* API_URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D323F8C27DA361F007E4414 /* API_URL.swift */; };
+		4D323F8F27DA3849007E4414 /* CurrencySymbol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D323F8E27DA3849007E4414 /* CurrencySymbol.swift */; };
+		4D323F9327DA7F5C007E4414 /* MyBallanceCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D323F9127DA7F5C007E4414 /* MyBallanceCollectionViewCell.swift */; };
+		4D323F9427DA7F5C007E4414 /* MyBallanceCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D323F9227DA7F5C007E4414 /* MyBallanceCollectionViewCell.xib */; };
+		4D46505727DB265500CA9A2F /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D46505627DB265500CA9A2F /* UIViewControllerExtension.swift */; };
+		4D46505A27DB44D000CA9A2F /* Richability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D46505927DB44D000CA9A2F /* Richability.swift */; };
+		4D46505C27DB479E00CA9A2F /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D46505B27DB479E00CA9A2F /* UIColorExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,10 +41,18 @@
 		4D323F7827DA071A007E4414 /* RoundImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundImage.swift; sourceTree = "<group>"; };
 		4D323F7A27DA1101007E4414 /* MainPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPresenter.swift; sourceTree = "<group>"; };
 		4D323F7B27DA1101007E4414 /* MainWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWorker.swift; sourceTree = "<group>"; };
-		4D323F7C27DA1101007E4414 /* MainRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainRouter.swift; sourceTree = "<group>"; };
 		4D323F7D27DA1101007E4414 /* MainModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainModels.swift; sourceTree = "<group>"; };
 		4D323F7E27DA1101007E4414 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		4D323F7F27DA1101007E4414 /* MainInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainInteractor.swift; sourceTree = "<group>"; };
+		4D323F8627DA1EBB007E4414 /* CusstomTextfield.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CusstomTextfield.swift; sourceTree = "<group>"; };
+		4D323F8927DA3557007E4414 /* UIImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
+		4D323F8C27DA361F007E4414 /* API_URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API_URL.swift; sourceTree = "<group>"; };
+		4D323F8E27DA3849007E4414 /* CurrencySymbol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencySymbol.swift; sourceTree = "<group>"; };
+		4D323F9127DA7F5C007E4414 /* MyBallanceCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyBallanceCollectionViewCell.swift; sourceTree = "<group>"; };
+		4D323F9227DA7F5C007E4414 /* MyBallanceCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyBallanceCollectionViewCell.xib; sourceTree = "<group>"; };
+		4D46505627DB265500CA9A2F /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
+		4D46505927DB44D000CA9A2F /* Richability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Richability.swift; sourceTree = "<group>"; };
+		4D46505B27DB479E00CA9A2F /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +88,9 @@
 			children = (
 				4D323F5F27CEFE5D007E4414 /* AppDelegate.swift */,
 				4D323F6127CEFE5D007E4414 /* SceneDelegate.swift */,
+				4D46505827DB44B200CA9A2F /* Services */,
+				4D323F8B27DA3607007E4414 /* Enums */,
+				4D323F8827DA3539007E4414 /* Extensions */,
 				4D323F7727DA06F3007E4414 /* CustomElements */,
 				4D323F7627DA06E0007E4414 /* Scene */,
 				4D323F6527CEFE5D007E4414 /* Main.storyboard */,
@@ -85,12 +104,12 @@
 		4D323F7627DA06E0007E4414 /* Scene */ = {
 			isa = PBXGroup;
 			children = (
-				4D323F7A27DA1101007E4414 /* MainPresenter.swift */,
-				4D323F7B27DA1101007E4414 /* MainWorker.swift */,
-				4D323F7C27DA1101007E4414 /* MainRouter.swift */,
-				4D323F7D27DA1101007E4414 /* MainModels.swift */,
+				4D323F9027DA7F22007E4414 /* Views */,
 				4D323F7E27DA1101007E4414 /* MainViewController.swift */,
 				4D323F7F27DA1101007E4414 /* MainInteractor.swift */,
+				4D323F7A27DA1101007E4414 /* MainPresenter.swift */,
+				4D323F7B27DA1101007E4414 /* MainWorker.swift */,
+				4D323F7D27DA1101007E4414 /* MainModels.swift */,
 			);
 			path = Scene;
 			sourceTree = "<group>";
@@ -99,8 +118,45 @@
 			isa = PBXGroup;
 			children = (
 				4D323F7827DA071A007E4414 /* RoundImage.swift */,
+				4D323F8627DA1EBB007E4414 /* CusstomTextfield.swift */,
 			);
 			path = CustomElements;
+			sourceTree = "<group>";
+		};
+		4D323F8827DA3539007E4414 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				4D323F8927DA3557007E4414 /* UIImageExtension.swift */,
+				4D46505627DB265500CA9A2F /* UIViewControllerExtension.swift */,
+				4D46505B27DB479E00CA9A2F /* UIColorExtension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		4D323F8B27DA3607007E4414 /* Enums */ = {
+			isa = PBXGroup;
+			children = (
+				4D323F8C27DA361F007E4414 /* API_URL.swift */,
+				4D323F8E27DA3849007E4414 /* CurrencySymbol.swift */,
+			);
+			path = Enums;
+			sourceTree = "<group>";
+		};
+		4D323F9027DA7F22007E4414 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				4D323F9127DA7F5C007E4414 /* MyBallanceCollectionViewCell.swift */,
+				4D323F9227DA7F5C007E4414 /* MyBallanceCollectionViewCell.xib */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		4D46505827DB44B200CA9A2F /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				4D46505927DB44D000CA9A2F /* Richability.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -167,6 +223,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D323F9427DA7F5C007E4414 /* MyBallanceCollectionViewCell.xib in Resources */,
 				4D323F6C27CEFE60007E4414 /* LaunchScreen.storyboard in Resources */,
 				4D323F6927CEFE60007E4414 /* Assets.xcassets in Resources */,
 				4D323F6727CEFE5D007E4414 /* Main.storyboard in Resources */,
@@ -180,14 +237,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D323F8F27DA3849007E4414 /* CurrencySymbol.swift in Sources */,
+				4D46505A27DB44D000CA9A2F /* Richability.swift in Sources */,
+				4D323F8727DA1EBB007E4414 /* CusstomTextfield.swift in Sources */,
 				4D323F7927DA071A007E4414 /* RoundImage.swift in Sources */,
 				4D323F6027CEFE5D007E4414 /* AppDelegate.swift in Sources */,
+				4D323F8D27DA361F007E4414 /* API_URL.swift in Sources */,
+				4D323F8A27DA3557007E4414 /* UIImageExtension.swift in Sources */,
 				4D323F6227CEFE5D007E4414 /* SceneDelegate.swift in Sources */,
 				4D323F8127DA1101007E4414 /* MainWorker.swift in Sources */,
 				4D323F8027DA1101007E4414 /* MainPresenter.swift in Sources */,
+				4D323F9327DA7F5C007E4414 /* MyBallanceCollectionViewCell.swift in Sources */,
+				4D46505C27DB479E00CA9A2F /* UIColorExtension.swift in Sources */,
 				4D323F8527DA1101007E4414 /* MainInteractor.swift in Sources */,
 				4D323F8327DA1101007E4414 /* MainModels.swift in Sources */,
-				4D323F8227DA1101007E4414 /* MainRouter.swift in Sources */,
+				4D46505727DB265500CA9A2F /* UIViewControllerExtension.swift in Sources */,
 				4D323F8427DA1101007E4414 /* MainViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

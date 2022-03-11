@@ -10,7 +10,7 @@ import UIKit
 
 protocol MaininteractorDelegate {
 
-    func presentSomething(response: Main.Models.Response)
+    func presentError(message: String)
 }
 
 protocol MainDataStore {
@@ -20,13 +20,47 @@ protocol MainDataStore {
 typealias MainInteractorInput = MainViewControllerDelegate
 
 class MainInteractor: MainInteractorInput, MainDataStore {
+    
+    enum erros: Error {
+        case noInternet
+        case n
+    }
+    
 
     var presenter: MaininteractorDelegate?
-    var worker: MainWorker?
-  //var name: String = ""
+    private var worker: MainAPIWorker!
+  
   
   // MARK: Do something
     func viewDidload() {
+         worker = MainAPIWorker()
+    }
+    
+    func requestForExchange(fromAmount: String, fromCurrency: CurrencySymbol, toCurrency: CurrencySymbol) {
+   
+        let amount: String = String(fromAmount)
         
+        worker.exhangeRequest(fromAmount: amount, fromCurrency: fromCurrency, toCurrency: toCurrency) { [weak self] exchange, error in
+            
+            if let exchange = exchange {
+                //persist exchgange locally
+                
+            } else if error != nil {
+                self?.presenter?.presentError(message: error!)
+            } else {
+                self?.presenter?.presentError(message: "sorry something went wrong")
+            }
+        }
+    }
+    
+    private func request() throws {
+        
+//        if {
+//           
+//            
+//        } else {
+//            
+//            
+//        }
     }
 }

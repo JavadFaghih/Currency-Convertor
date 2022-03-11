@@ -24,16 +24,20 @@
                                 <color key="textColor" red="0.5607843137254902" green="0.59999999999999998" blue="0.63921568627450975" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="0DR-c0-VQD">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="0DR-c0-VQD">
                                 <rect key="frame" x="0.0" y="135.5" width="414" height="62.5"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="WNg-k5-rr6">
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="WNg-k5-rr6">
                                     <size key="itemSize" width="128" height="128"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells/>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="M7v-MD-QH6"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="zeF-Hq-4Sa"/>
+                                </connections>
                             </collectionView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CURRENCY EXCHANGE" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Eg-a5-eYt">
                                 <rect key="frame" x="15" y="213" width="384" height="20.5"/>
@@ -41,51 +45,73 @@
                                 <color key="textColor" red="0.56078431370000004" green="0.59999999999999998" blue="0.63921568630000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Zy5-gZ-bNb">
-                                <rect key="frame" x="15" y="248.5" width="384" height="115.5"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="AFH-U9-aYG">
+                                <rect key="frame" x="15" y="248.5" width="384" height="54"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="AFH-U9-aYG">
-                                        <rect key="frame" x="0.0" y="0.0" width="384" height="54"/>
-                                        <subviews>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="RFA-xm-SbQ" customClass="RoundImage" customModule="Currency_Convertor" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="-1.5" width="54" height="56.5"/>
-                                                <color key="backgroundColor" red="0.94901960780000005" green="0.30588235289999999" blue="0.30588235289999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" secondItem="RFA-xm-SbQ" secondAttribute="height" multiplier="1:1" id="JDQ-Zu-wuf"/>
-                                                </constraints>
-                                                <imageReference key="image" image="arrow.up" catalog="system" symbolScale="large"/>
-                                            </imageView>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tI0-jo-ci9">
-                                                <rect key="frame" x="69" y="0.0" width="315" height="54"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="decimalPad" keyboardAppearance="light" returnKeyType="done" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
-                                            </textField>
-                                        </subviews>
-                                    </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="BWy-qI-TQd">
-                                        <rect key="frame" x="0.0" y="62" width="384" height="53.5"/>
-                                        <subviews>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mpg-zv-f0c" customClass="RoundImage" customModule="Currency_Convertor" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="-1.5" width="54" height="56"/>
-                                                <color key="backgroundColor" red="0.29803921570000003" green="0.68627450980000004" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" secondItem="mpg-zv-f0c" secondAttribute="height" multiplier="1:1" id="iYF-c7-kiF"/>
-                                                </constraints>
-                                                <imageReference key="image" image="arrow.down" catalog="system" symbolScale="large"/>
-                                            </imageView>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gau-In-hgl">
-                                                <rect key="frame" x="69" y="0.0" width="315" height="53.5"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="decimalPad" keyboardAppearance="light" returnKeyType="done" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
-                                            </textField>
-                                        </subviews>
-                                    </stackView>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="RFA-xm-SbQ" customClass="RoundImage" customModule="Currency_Convertor" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="-1.5" width="54" height="56.5"/>
+                                        <color key="backgroundColor" red="0.94901960780000005" green="0.30588235289999999" blue="0.30588235289999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="RFA-xm-SbQ" secondAttribute="height" multiplier="1:1" id="JDQ-Zu-wuf"/>
+                                        </constraints>
+                                        <imageReference key="image" image="arrow.up" catalog="system" symbolScale="large"/>
+                                    </imageView>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tI0-jo-ci9" customClass="CustomTextfield" customModule="Currency_Convertor" customModuleProvider="target">
+                                        <rect key="frame" x="69" y="0.0" width="225" height="54"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="decimalPad" keyboardAppearance="light" returnKeyType="done" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
+                                    </textField>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Pso-vM-doC" customClass="CustomTextfield" customModule="Currency_Convertor" customModuleProvider="target">
+                                        <rect key="frame" x="309" y="0.0" width="75" height="54"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="75" id="OvC-mL-L6c"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="decimalPad" keyboardAppearance="light" returnKeyType="done" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
+                                    </textField>
                                 </subviews>
                             </stackView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nez-tw-u1o">
+                                <rect key="frame" x="84" y="302.5" width="330" height="0.5"/>
+                                <color key="backgroundColor" red="0.95294117647058818" green="0.95686274509803915" blue="0.96470588235294119" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="0.5" id="h49-4k-28w"/>
+                                </constraints>
+                            </view>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="BWy-qI-TQd">
+                                <rect key="frame" x="15" y="318" width="384" height="53.5"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mpg-zv-f0c" customClass="RoundImage" customModule="Currency_Convertor" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="-1.5" width="54" height="56"/>
+                                        <color key="backgroundColor" red="0.29803921570000003" green="0.68627450980000004" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="mpg-zv-f0c" secondAttribute="height" multiplier="1:1" id="iYF-c7-kiF"/>
+                                        </constraints>
+                                        <imageReference key="image" image="arrow.down" catalog="system" symbolScale="large"/>
+                                    </imageView>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gau-In-hgl" customClass="CustomTextfield" customModule="Currency_Convertor" customModuleProvider="target">
+                                        <rect key="frame" x="69" y="0.0" width="225" height="53.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="decimalPad" keyboardAppearance="light" returnKeyType="done" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
+                                    </textField>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="C22-wt-sGq" customClass="CustomTextfield" customModule="Currency_Convertor" customModuleProvider="target">
+                                        <rect key="frame" x="309" y="0.0" width="75" height="53.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="decimalPad" keyboardAppearance="light" returnKeyType="done" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
+                                    </textField>
+                                </subviews>
+                            </stackView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bpE-Lu-3oj">
+                                <rect key="frame" x="84" y="371.5" width="330" height="0.5"/>
+                                <color key="backgroundColor" red="0.95294117649999999" green="0.95686274510000002" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="0.5" id="IhX-vv-c39"/>
+                                </constraints>
+                            </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Eml-fD-3rs">
-                                <rect key="frame" x="30" y="399" width="354" height="54"/>
+                                <rect key="frame" x="30" y="392" width="354" height="54"/>
                                 <color key="backgroundColor" red="0.0078431372549019607" green="0.57647058823529407" blue="0.83529411764705885" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -102,27 +128,42 @@
                         <constraints>
                             <constraint firstItem="1Eg-a5-eYt" firstAttribute="top" secondItem="0DR-c0-VQD" secondAttribute="bottom" constant="15" id="46P-yX-4Wv"/>
                             <constraint firstItem="0DR-c0-VQD" firstAttribute="top" secondItem="x8d-Ze-sC7" secondAttribute="bottom" constant="15" id="4gm-ds-Vhj"/>
+                            <constraint firstItem="AFH-U9-aYG" firstAttribute="top" secondItem="1Eg-a5-eYt" secondAttribute="bottom" constant="15" id="6Hq-HF-zfR"/>
                             <constraint firstItem="0DR-c0-VQD" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.07" id="896-Zd-N0q"/>
+                            <constraint firstItem="nez-tw-u1o" firstAttribute="leading" secondItem="tI0-jo-ci9" secondAttribute="leading" id="8nO-ts-sK4"/>
                             <constraint firstItem="Eml-fD-3rs" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.06" id="AHR-8B-eZt"/>
                             <constraint firstItem="x8d-Ze-sC7" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="12" id="AYK-yX-qg1"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Eml-fD-3rs" secondAttribute="trailing" constant="30" id="Bd6-T1-42l"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="0DR-c0-VQD" secondAttribute="trailing" id="CNL-lv-TFW"/>
                             <constraint firstItem="0DR-c0-VQD" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="CYO-Mr-bai"/>
                             <constraint firstItem="Eml-fD-3rs" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="30" id="CfB-qe-pOu"/>
-                            <constraint firstItem="Eml-fD-3rs" firstAttribute="top" secondItem="Zy5-gZ-bNb" secondAttribute="bottom" constant="35" id="HJB-uX-zDX"/>
+                            <constraint firstItem="nez-tw-u1o" firstAttribute="top" secondItem="AFH-U9-aYG" secondAttribute="bottom" id="Esn-Wf-4OW"/>
+                            <constraint firstItem="BWy-qI-TQd" firstAttribute="top" secondItem="nez-tw-u1o" secondAttribute="bottom" constant="15" id="H2J-Ca-BXK"/>
+                            <constraint firstItem="bpE-Lu-3oj" firstAttribute="top" secondItem="BWy-qI-TQd" secondAttribute="bottom" id="Hn7-Xm-0RI"/>
+                            <constraint firstItem="RFA-xm-SbQ" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.06" id="JSG-cA-gbA"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="BWy-qI-TQd" secondAttribute="trailing" constant="15" id="Kwp-Mt-qjB"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="nez-tw-u1o" secondAttribute="trailing" id="LFn-i5-rQW"/>
+                            <constraint firstItem="mpg-zv-f0c" firstAttribute="height" secondItem="RFA-xm-SbQ" secondAttribute="height" id="NjO-jp-NvU"/>
                             <constraint firstItem="x8d-Ze-sC7" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="15" id="OIQ-WZ-Ut5"/>
-                            <constraint firstItem="mpg-zv-f0c" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.06" id="Ts4-Qz-dW4"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Zy5-gZ-bNb" secondAttribute="trailing" constant="15" id="iYx-qP-3Xx"/>
-                            <constraint firstItem="Zy5-gZ-bNb" firstAttribute="top" secondItem="1Eg-a5-eYt" secondAttribute="bottom" constant="15" id="myd-zh-PJQ"/>
+                            <constraint firstItem="C22-wt-sGq" firstAttribute="width" secondItem="Pso-vM-doC" secondAttribute="width" id="OLK-3M-Nbg"/>
+                            <constraint firstItem="BWy-qI-TQd" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="15" id="Wib-qA-waC"/>
+                            <constraint firstItem="AFH-U9-aYG" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="15" id="edP-6K-luM"/>
+                            <constraint firstAttribute="trailing" secondItem="bpE-Lu-3oj" secondAttribute="trailing" id="g0c-fE-r8B"/>
+                            <constraint firstItem="bpE-Lu-3oj" firstAttribute="leading" secondItem="gau-In-hgl" secondAttribute="leading" id="gIR-Hb-7DI"/>
                             <constraint firstItem="1Eg-a5-eYt" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="15" id="q0M-xF-cyd"/>
-                            <constraint firstItem="RFA-xm-SbQ" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.06" id="spx-N6-O2R"/>
-                            <constraint firstItem="Zy5-gZ-bNb" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="15" id="uCC-eT-bwf"/>
+                            <constraint firstItem="Eml-fD-3rs" firstAttribute="top" secondItem="bpE-Lu-3oj" secondAttribute="bottom" constant="20" id="tSg-Wt-Kc6"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="x8d-Ze-sC7" secondAttribute="trailing" constant="8" id="vew-5G-Vrt"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="AFH-U9-aYG" secondAttribute="trailing" constant="15" id="wi6-zr-NYc"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="1Eg-a5-eYt" secondAttribute="trailing" constant="15" id="wjr-GH-6E1"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Currency convertor" id="cG0-mf-Vzb"/>
                     <connections>
+                        <outlet property="buyAmountField" destination="gau-In-hgl" id="CPN-d2-Tez"/>
+                        <outlet property="collectionView" destination="0DR-c0-VQD" id="2wv-Lo-bxr"/>
+                        <outlet property="receiveCurrencySymbolField" destination="C22-wt-sGq" id="N8Q-gk-foE"/>
+                        <outlet property="sellAmountField" destination="tI0-jo-ci9" id="ZRm-xp-SNl"/>
+                        <outlet property="sellCurrencySymbolField" destination="Pso-vM-doC" id="q93-0u-Cfw"/>
                         <outlet property="submitBuuton" destination="Eml-fD-3rs" id="1HP-Am-Z13"/>
                     </connections>
                 </viewController>
