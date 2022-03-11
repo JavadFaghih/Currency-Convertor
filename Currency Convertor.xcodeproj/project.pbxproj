@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4D1E5A5E27DBD3A700B2BB03 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1E5A5D27DBD3A700B2BB03 /* Errors.swift */; };
 		4D323F6027CEFE5D007E4414 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D323F5F27CEFE5D007E4414 /* AppDelegate.swift */; };
 		4D323F6227CEFE5D007E4414 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D323F6127CEFE5D007E4414 /* SceneDelegate.swift */; };
 		4D323F6727CEFE5D007E4414 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D323F6527CEFE5D007E4414 /* Main.storyboard */; };
@@ -34,6 +35,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4D1E5A5D27DBD3A700B2BB03 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		4D323F5C27CEFE5D007E4414 /* Currency Convertor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Currency Convertor.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D323F5F27CEFE5D007E4414 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4D323F6127CEFE5D007E4414 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -141,6 +143,7 @@
 			children = (
 				4D323F8C27DA361F007E4414 /* API_URL.swift */,
 				4D323F8E27DA3849007E4414 /* CurrencySymbol.swift */,
+				4D1E5A5D27DBD3A700B2BB03 /* Errors.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -287,6 +290,7 @@
 				4D323F8527DA1101007E4414 /* MainInteractor.swift in Sources */,
 				4D323F8327DA1101007E4414 /* MainModels.swift in Sources */,
 				4D46505727DB265500CA9A2F /* UIViewControllerExtension.swift in Sources */,
+				4D1E5A5E27DBD3A700B2BB03 /* Errors.swift in Sources */,
 				4D323F8427DA1101007E4414 /* MainViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

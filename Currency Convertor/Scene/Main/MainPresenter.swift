@@ -32,9 +32,13 @@ class MainPresenter: MainPresenterInput {
             var balances: [Main.Models.ViewModel] = []
             
             for currency in item.currencies {
+                
                 balances.append(Main.Models.ViewModel(amount: String(currency.Amount), symbol: currency.Symbol))
             }
+            
+            print(balances)
             viewController?.displayBalanceItem(balances)
+            
         }
     }
     

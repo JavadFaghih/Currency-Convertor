@@ -10,42 +10,20 @@ import UIKit
 import RealmSwift
 
 protocol MaininteractorDelegate {
-
     func presentError(message: String)
     func presentMyBalances(balance: Results<UserBalance>)
     func presentExchangeResult(_ result: Main.Models.ExchangeResponse)
 }
 
 protocol MainDataStore {
-  //var name: String { get set }
+    //var name: String { get set }
 }
 
 typealias MainInteractorInput = MainViewControllerDelegate
 
 class MainInteractor: NSObject, MainInteractorInput, MainDataStore {
     
-    enum errors: Error {
-        case noInternet
-        case JPY
-        case USD
-        case EUR
-        
-        var description: String {
-            switch self {
-            case .noInternet:
-                return "the Internet connection appears to be oflline"
-            case .JPY:
-                return "you do not have enough \(self) currency"
-            case .USD:
-                return "you do not have enough \(self) currency"
-            case .EUR:
-                return "you do not have enough \(self) currency"
-            }
-        }
-        
-    }
-    
-
+    //MARK: - Vars
     var presenter: MaininteractorDelegate?
     private var worker: MainAPIWorker!
     private var isFirstRun: Bool {
@@ -58,67 +36,107 @@ class MainInteractor: NSObject, MainInteractorInput, MainDataStore {
     }
     private var group: DispatchGroup!
     private var exchange: Main.Models.ExchangeResponse!
-    private var balance: [UserCurrencies]! //initial balances
+    private var currencies: [UserCurrencies]! //initial balances
+    private var userBalane: UserBalance!
     private var balances: Results<UserBalance>! //get value from database
+    private var requestModel: Main.Models.Request!
     
-  // MARK: Do something
+    //MARK: - ViewController delegate methods
     func viewDidload() {
-         worker = MainAPIWorker()
+        worker = MainAPIWorker()
         group = DispatchGroup()
         
         if isFirstRun {
             
-            //if you need more currency just write it here to this balance
-            balance = [UserCurrencies(symbol: CurrencySymbol.JPY.rawValue, amount: 0),
+            //if you need more currency just write it here to this balance and remove the app from simulator
+            currencies = [UserCurrencies(symbol: CurrencySymbol.JPY.rawValue, amount: 0),
                        UserCurrencies(symbol: CurrencySymbol.EUR.rawValue, amount: 0),
-                       UserCurrencies(symbol: CurrencySymbol.USD.rawValue, amount: 100)]
+                       UserCurrencies(symbol: CurrencySymbol.USD.rawValue, amount: 100) ]
             
-            DBManager.instance.save(object: UserBalance(id: 0, numberOfExchange: 0, balance: balance))
+            self.userBalane =  UserBalance(id: 0, numberOfExchange: 0, balance: currencies)
+            
+            DBManager.instance.save(object: userBalane)
             isFirstRun = false
         }
         
-      balances = DBManager.instance.read(object: UserBalance())
-        
+        balances = DBManager.instance.read(object: UserBalance())
         presenter?.presentMyBalances(balance: balances)
-        
     }
     
-    func requestForExchange(fromAmount: String, fromCurrency: CurrencySymbol, toCurrency: CurrencySymbol) {
-   
-     //   let amount: String = String(fromAmount)
+    func requestForExchange(_ requestModel: Main.Models.Request) {
         
-        group.enter()
-        worker.exhangeRequest(fromAmount: fromAmount, fromCurrency: fromCurrency, toCurrency: toCurrency) { [weak self] exchange, error in
-            
-            if let exchange = exchange {
-                //save exchgange locally
-                self?.exchange = exchange
-                self?.group.leave()
-                
-            } else if error != nil {
-                self?.presenter?.presentError(message: error!)
-            } else {
-                self?.presenter?.presentError(message: "sorry something went wrong...")
-            }
+        self.requestModel = requestModel
+        
+        do {
+            try request(requestModel)
+          //  group.enter()
+        } catch Errors.invalidInput {
+            presenter?.presentError(message: Errors.invalidInput.description)
+        } catch Errors.noInternet {
+            presenter?.presentError(message: Errors.noInternet.description)
+        } catch Errors.USD {
+            presenter?.presentError(message: Errors.USD.description)
+        } catch Errors.EUR {
+            presenter?.presentError(message: Errors.EUR.description)
+        } catch Errors.JPY {
+            presenter?.presentError(message: Errors.JPY.description)
+        } catch {
+            presenter?.presentError(message: "sorry something went wrong")
         }
         
-        group.notify(queue: .global()) { [unowned self]  in
-        
-            let transactionAmount = self.exchange.amount
-            let destineyCurrency = self.exchange.currency
+        group.notify(queue: .global(qos: .background)) { [unowned self]  in
             
+        //    let transactionAmount = self.exchange.amount
+         //   let destineyCurrency = self.exchange.currency
             
-         //  DBManager.instance.save(object: self.balance)
-            self.presenter?.presentExchangeResult(self.exchange)
+           
         }
     }
     
+    
+    //MARK: - Internal methods
     private func request(_ requsetModel: Main.Models.Request) throws {
         
+        var numberOfExchange: Int = balances.last?.numberOfExchange ?? 0
+        var currenciesBalance: List<UserCurrencies>? = balances.last?.currencies
+        
+       // currenciesBalance?.last.
         
         if currentReachabilityStatus == .notReachable {
-            throw errors.noInternet
-        } //else if balances
+            throw Errors.noInternet
+        } //else if requestModel.fromAmount >
+        
+        else {
+            
+            worker.exhangeRequest(fromAmount: requestModel.fromAmount, fromCurrency: requestModel.fromCurrency, toCurrency: requestModel.toCurrency) { [weak self] exchange, error in
+                
+                if let exchange = exchange {
+                  
+                    //save exchgange locally
+                    self?.exchange = exchange
+                    self?.balances?.last?.numberOfExchange += 1
+              
+                    //save exchange localy
+                    
+                    DBManager.instance.save(object: self?.balances?.last ?? UserBalance())
+                    
+                    //present exchange request result to user
+                    self?.presenter?.presentExchangeResult(exchange)
+                    
+                    
+                    //  self?.group.leave()
+                    
+                } else if error != nil {
+                    
+                    self?.presenter?.presentError(message: error!)
+
+                } else {
+                    
+                    self?.presenter?.presentError(message: "sorry something went wrong...")
+                }
+            }
+            
+        }
     }
 }
 

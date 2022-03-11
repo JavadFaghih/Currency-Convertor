@@ -16,8 +16,8 @@ enum Main {
         
         struct Request {
             let fromAmount: String
-            let fromCurrency: String
-            let toCurrency: String
+            let fromCurrency: CurrencySymbol
+            let toCurrency: CurrencySymbol
         }
         // MARK: - ExchangeResponse
         struct ExchangeResponse: Codable {
@@ -55,7 +55,7 @@ class UserBalance: Object {
 
 class UserCurrencies: Object {
     @Persisted var Symbol: String
-    @Persisted var Amount: Double = 0.0
+    @Persisted var Amount: Double
     
     @Persisted(originProperty: "currencies") var assignee: LinkingObjects<UserBalance>
     

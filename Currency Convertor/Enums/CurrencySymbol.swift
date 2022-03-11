@@ -11,4 +11,5 @@ enum CurrencySymbol: String, CaseIterable {
     case EUR
     case USD
     case JPY
+    case IR
 }

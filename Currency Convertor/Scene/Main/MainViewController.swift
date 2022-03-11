@@ -8,16 +8,16 @@
 import UIKit
 
 protocol MainViewControllerDelegate {
-
+    
     func viewDidload()
-    func requestForExchange(fromAmount: String, fromCurrency: CurrencySymbol, toCurrency: CurrencySymbol)
+    func requestForExchange(_ requestModel: Main.Models.Request)
 }
 
 typealias MainViewControllerInput = MainPresenterDelegate
 
 class MainViewController: UIViewController {
- 
-     //MARK: - IBOutlets
+    
+    //MARK: - IBOutlets
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var sellAmountField: CustomTextfield!
     @IBOutlet weak var buyAmountField: CustomTextfield!
@@ -25,74 +25,55 @@ class MainViewController: UIViewController {
     @IBOutlet weak var sellCurrencySymbolField: CustomTextfield!
     @IBOutlet weak var receiveCurrencySymbolField: CustomTextfield!
     
-     //MARK: - Vars
+    //MARK: - Vars
     var interactor: MainViewControllerDelegate?
     private var sellPickerView: UIPickerView!
     private var recievePickerView: UIPickerView!
     private var CurrenySymbolls: [String] = CurrencySymbol.allCases.map { $0.rawValue }
     private var balances: [Main.Models.ViewModel] = []
     
-  // MARK: Object lifecycle
-  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-    super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-    setup()
- 
-  }
-  
-  required init?(coder aDecoder: NSCoder) {
-    super.init(coder: aDecoder)
-    setup()
-  }
-  
-  // MARK: Setup
-  private func setup() {
-  
-    let viewController = self
-    let interactor = MainInteractor()
-    let presenter = MainPresenter()
-    viewController.interactor = interactor
-    interactor.presenter = presenter
-    presenter.viewController = viewController
-   
-  }
-   
+    // MARK: Object lifecycle
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        setup()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        setup()
+    }
+    
+    // MARK: Setup
+    private func setup() {
+        
+        let viewController = self
+        let interactor = MainInteractor()
+        let presenter = MainPresenter()
+        viewController.interactor = interactor
+        interactor.presenter = presenter
+        presenter.viewController = viewController
+    }
+    
     // MARK: View lifecycle
-  override func viewDidLoad() {
-    super.viewDidLoad()
-  
-      let myBallanceCell = UINib(nibName: "MyBallanceCollectionViewCell", bundle: Bundle.main)
-      
-      collectionView.register(myBallanceCell, forCellWithReuseIdentifier: MyBallanceCollectionViewCell.reuseIdentifier)
-      sellPickerView = UIPickerView()
-      recievePickerView = UIPickerView()
-      sellPickerView.delegate = self
-      sellPickerView.dataSource = self
-      recievePickerView.delegate = self
-      recievePickerView.dataSource = self
-      sellCurrencySymbolField.inputView = sellPickerView
-      receiveCurrencySymbolField.inputView = recievePickerView
-      
-      interactor?.viewDidload()
-      sellCurrencySymbolField.setRightImage(image: .pullDownImage)
-      receiveCurrencySymbolField.setRightImage(image: .pullDownImage)
-      sellAmountField.setLeftTitle(text: "Sell")
-      buyAmountField.setLeftTitle(text: "Receive")
-      hiddenKeyboardWhenTapRound()
-      configNavBar()
-      
-      sellCurrencySymbolField.text = CurrenySymbolls[1]
-      receiveCurrencySymbolField.text = CurrenySymbolls[0]
-      sellAmountField.delegate = self
-  }
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        configCollectionView()
+        configPickerView()
+        interactor?.viewDidload()
+        hiddenKeyboardWhenTapRound()
+        configNavBar()
+        prepareTextFields()
+    }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         submitBuuton.layer.cornerRadius = submitBuuton.frame.size.height / 2
     }
     
-     //MARK: - IBAction
+    //MARK: - IBAction
     @IBAction func submitButtonPressed(_ sender: Any) {
-      
+        
         let amount = sellAmountField.text ?? ""
         var sellSymbol: CurrencySymbol {
             get {
@@ -105,10 +86,40 @@ class MainViewController: UIViewController {
             }
         }
         
-        interactor?.requestForExchange(fromAmount: amount, fromCurrency: sellSymbol, toCurrency: recieveSymbol)
+        interactor?.requestForExchange(Main.Models.Request(fromAmount: amount,
+                                                           fromCurrency: sellSymbol,
+                                                           toCurrency: recieveSymbol))
+        submitBuuton.isEnabled = false
     }
     
-     //MARK: - Methods
+    //MARK: - Methods
+    private func configPickerView() {
+        sellPickerView = UIPickerView()
+        recievePickerView = UIPickerView()
+        sellPickerView.delegate = self
+        sellPickerView.dataSource = self
+        recievePickerView.delegate = self
+        recievePickerView.dataSource = self
+        sellCurrencySymbolField.inputView = sellPickerView
+        receiveCurrencySymbolField.inputView = recievePickerView
+    }
+    private func prepareTextFields() {
+        
+        sellCurrencySymbolField.setRightImage(image: .pullDownImage)
+        receiveCurrencySymbolField.setRightImage(image: .pullDownImage)
+        sellAmountField.setLeftTitle(text: "Sell")
+        buyAmountField.setLeftTitle(text: "Receive")
+        sellCurrencySymbolField.text = CurrenySymbolls[1]
+        receiveCurrencySymbolField.text = CurrenySymbolls[0]
+        sellAmountField.delegate = self
+    }
+    
+    private func configCollectionView() {
+        let myBallanceCell = UINib(nibName: "MyBallanceCollectionViewCell", bundle: Bundle.main)
+        collectionView.register(myBallanceCell, forCellWithReuseIdentifier: MyBallanceCollectionViewCell.reuseIdentifier)
+        
+    }
+    
     private func alert(title: String = "Oops!", message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let done = UIAlertAction(title: "Done", style: .default)
@@ -126,9 +137,9 @@ class MainViewController: UIViewController {
     }
 }
 
-     //MARK: - Presenter Delegate
+//MARK: - Presenter Delegate
 extension MainViewController: MainViewControllerInput {
-   
+    
     func displayBalanceItem(_ items: [Main.Models.ViewModel]) {
         self.balances = items
         collectionView.reloadData()
@@ -136,36 +147,41 @@ extension MainViewController: MainViewControllerInput {
     
     func displayError(message: String) {
         alert(message: message)
+        submitBuuton.isEnabled = true
     }
     
     func updateUI(recieveAmount: String) {
         DispatchQueue.main.async {
             self.buyAmountField.text = recieveAmount
+            self.submitBuuton.isEnabled = true
         }
     }
 }
 
- //MARK: - CollectionViewDelegate
+//MARK: - CollectionViewDelegate
 extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         self.balances.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MyBallanceCollectionViewCell.reuseIdentifier, for: indexPath) as? MyBallanceCollectionViewCell else { return UICollectionViewCell()}
         
         cell.myBallance = balances[indexPath.row]
         
+        print("balances are \n \(balances)")
+        
         return cell
     }
-    
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         1
     }
 }
 
- //MARK: - PickerView Delegate
+//MARK: - PickerView Delegate
 extension MainViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -175,7 +191,6 @@ extension MainViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         CurrenySymbolls.count
     }
-    
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         CurrenySymbolls[row]
@@ -195,17 +210,17 @@ extension MainViewController: UIPickerViewDelegate, UIPickerViewDataSource {
 extension MainViewController: UITextFieldDelegate {
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-
+        
         let dotsCount = textField.text!.components(separatedBy: (".")).count - 1
         if dotsCount > 0 && (string == "." || string == ",") {
             return false
         }
-
+        
         if string == "," {
             textField.text! += "."
             return false
         }
-
+        
         return true
     }
 }
