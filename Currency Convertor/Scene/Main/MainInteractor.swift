@@ -13,6 +13,7 @@ protocol MaininteractorDelegate {
 
     func presentError(message: String)
     func presentMyBalances(balance: Results<UserBalance>)
+    func presentExchangeResult(_ result: Main.Models.ExchangeResponse)
 }
 
 protocol MainDataStore {
@@ -21,7 +22,7 @@ protocol MainDataStore {
 
 typealias MainInteractorInput = MainViewControllerDelegate
 
-class MainInteractor: MainInteractorInput, MainDataStore {
+class MainInteractor: NSObject, MainInteractorInput, MainDataStore {
     
     enum errors: Error {
         case noInternet
@@ -101,23 +102,24 @@ class MainInteractor: MainInteractorInput, MainDataStore {
             }
         }
         
-        group.notify(queue: .global()) {
-           let transactionAmount = self.exchange.amount
+        group.notify(queue: .global()) { [unowned self]  in
+        
+            let transactionAmount = self.exchange.amount
             let destineyCurrency = self.exchange.currency
             
             
          //  DBManager.instance.save(object: self.balance)
+            self.presenter?.presentExchangeResult(self.exchange)
         }
     }
     
-    private func request() throws {
+    private func request(_ requsetModel: Main.Models.Request) throws {
         
         
-       // if currentReachabilityStatus == .notReachable {
-      //      throw errors.noInternet
-      //  }
+        if currentReachabilityStatus == .notReachable {
+            throw errors.noInternet
+        } //else if balances
     }
-    
-    
-    
 }
+
+

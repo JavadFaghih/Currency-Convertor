@@ -15,8 +15,9 @@ enum Main {
     enum Models {
         
         struct Request {
-            
-            
+            let fromAmount: String
+            let fromCurrency: String
+            let toCurrency: String
         }
         // MARK: - ExchangeResponse
         struct ExchangeResponse: Codable {

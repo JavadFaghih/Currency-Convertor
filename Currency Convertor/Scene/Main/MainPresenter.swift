@@ -13,6 +13,7 @@ protocol MainPresenterDelegate: AnyObject {
  
     func displayError(message: String)
     func displayBalanceItem(_ items: [Main.Models.ViewModel])
+    func updateUI(recieveAmount: String)
 }
 
 typealias MainPresenterInput = MaininteractorDelegate
@@ -35,6 +36,11 @@ class MainPresenter: MainPresenterInput {
             }
             viewController?.displayBalanceItem(balances)
         }
+    }
+    
+    func presentExchangeResult(_ result: Main.Models.ExchangeResponse) {
+        let amount = "+ \(result.amount)"
+        viewController?.updateUI(recieveAmount: amount)
     }
     
 }

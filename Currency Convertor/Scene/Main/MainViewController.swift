@@ -82,6 +82,7 @@ class MainViewController: UIViewController {
       
       sellCurrencySymbolField.text = CurrenySymbolls[1]
       receiveCurrencySymbolField.text = CurrenySymbolls[0]
+      sellAmountField.delegate = self
   }
     
     override func viewDidLayoutSubviews() {
@@ -123,8 +124,6 @@ class MainViewController: UIViewController {
         navigationController?.navigationBar.standardAppearance = appearance;
         navigationController?.navigationBar.scrollEdgeAppearance = navigationController?.navigationBar.standardAppearance
     }
-    
-    
 }
 
      //MARK: - Presenter Delegate
@@ -139,6 +138,11 @@ extension MainViewController: MainViewControllerInput {
         alert(message: message)
     }
     
+    func updateUI(recieveAmount: String) {
+        DispatchQueue.main.async {
+            self.buyAmountField.text = recieveAmount
+        }
+    }
 }
 
  //MARK: - CollectionViewDelegate
@@ -186,3 +190,23 @@ extension MainViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         }
     }
 }
+
+//for prevent use two dote in amount field
+extension MainViewController: UITextFieldDelegate {
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+
+        let dotsCount = textField.text!.components(separatedBy: (".")).count - 1
+        if dotsCount > 0 && (string == "." || string == ",") {
+            return false
+        }
+
+        if string == "," {
+            textField.text! += "."
+            return false
+        }
+
+        return true
+    }
+}
+
