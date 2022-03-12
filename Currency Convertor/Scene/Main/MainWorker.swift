@@ -11,7 +11,7 @@ import Alamofire
 
 class MainAPIWorker {
   
-    func exhangeRequest(fromAmount: String, fromCurrency: CurrencySymbol, toCurrency: CurrencySymbol, complations: @escaping(_ response: Main.Models.ExchangeResponse?,_ errors: String?) -> Void) {
+    func exhangeRequest(fromAmount: Double, fromCurrency: CurrencySymbol, toCurrency: CurrencySymbol, complations: @escaping(_ response: Main.Models.ExchangeResponse?,_ errors: String?) -> Void) {
         
         AF.request("\(API_URL.exchange.rawValue)\(fromAmount)-\(fromCurrency.rawValue)/\(toCurrency.rawValue)/latest").responseData { response in
           

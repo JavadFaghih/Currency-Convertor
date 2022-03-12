@@ -26,20 +26,17 @@ class MainPresenter: MainPresenterInput {
         viewController?.displayError(message: message)
     }
     
-    func presentMyBalances(balance: Results<UserBalance>) {
-        for item in balance {
+    func presentMyBalances(balance: UserBalance) {
+        
             
             var balances: [Main.Models.ViewModel] = []
             
-            for currency in item.currencies {
+            for currency in balance.currencies {
                 
-                balances.append(Main.Models.ViewModel(amount: String(currency.Amount), symbol: currency.Symbol))
+                balances.append(Main.Models.ViewModel(amount: String(currency.Amount), symbol: currency.Symbol.rawValue))
             }
             
-            print(balances)
             viewController?.displayBalanceItem(balances)
-            
-        }
     }
     
     func presentExchangeResult(_ result: Main.Models.ExchangeResponse) {

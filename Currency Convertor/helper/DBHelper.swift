@@ -37,10 +37,14 @@ final class DBManager {
             return data
     }
     
-    func updata<T: Object>(object: T) {
+    func updataUserBalance(numberOfExchange: Int, currencies: [UserCurrencies]) {
+       
+        let object = realm.objects(UserBalance.self).last
+        
         do {
             try realm.write {
-                
+                object?.numberOfExchange += numberOfExchange
+              //  object?.currencies.append(objectsIn: currencies)
             }
         } catch {
             

@@ -74,7 +74,11 @@ class MainViewController: UIViewController {
     //MARK: - IBAction
     @IBAction func submitButtonPressed(_ sender: Any) {
         
-        let amount = sellAmountField.text ?? ""
+        var amount: Double {
+            get {
+               Double(sellAmountField.text ?? "") ?? 0
+            }
+        }
         var sellSymbol: CurrencySymbol {
             get {
                 CurrencySymbol(rawValue: sellCurrencySymbolField.text ?? "") ?? .USD
@@ -147,7 +151,11 @@ extension MainViewController: MainViewControllerInput {
     
     func displayError(message: String) {
         alert(message: message)
-        submitBuuton.isEnabled = true
+      
+        DispatchQueue.main.async {
+            self.submitBuuton.isEnabled = true
+        }
+        
     }
     
     func updateUI(recieveAmount: String) {
@@ -170,8 +178,6 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MyBallanceCollectionViewCell.reuseIdentifier, for: indexPath) as? MyBallanceCollectionViewCell else { return UICollectionViewCell()}
         
         cell.myBallance = balances[indexPath.row]
-        
-        print("balances are \n \(balances)")
         
         return cell
     }

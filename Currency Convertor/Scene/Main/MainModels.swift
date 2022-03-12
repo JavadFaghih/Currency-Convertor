@@ -15,7 +15,7 @@ enum Main {
     enum Models {
         
         struct Request {
-            let fromAmount: String
+            let fromAmount: Double
             let fromCurrency: CurrencySymbol
             let toCurrency: CurrencySymbol
         }
@@ -36,33 +36,70 @@ enum Main {
 
 class UserBalance: Object {
     
-    @Persisted var id = 0
+    @Persisted var id: String
     @Persisted var numberOfExchange: Int = 0
+    @Persisted var totalComission: Double = 0
     @Persisted var currencies: List<UserCurrencies>
     
-    convenience init(id: Int, numberOfExchange: Int, balance: [UserCurrencies]) {
+    convenience init(numberOfExchange: Int, commision: Double = 0, balances: [UserCurrencies]) {
         self.init()
-        self.id = id
+        self.id = UUID().uuidString
         self.numberOfExchange = numberOfExchange
-        self.currencies.append(objectsIn: balance)
+        self.currencies.append(objectsIn: balances)
+        self.totalComission = commision
     }
     
     override class func primaryKey() -> String? {
         "id"
     }
     
+    static func getInfo() -> UserBalance? {
+        
+        do {
+            let realm = try Realm()
+            return realm.objects(UserBalance.self).last
+        } catch {
+            return nil
+        }
+    }
+    
+    static func update(userBalance: UserBalance, numberOfexchange: Int, balance: UserCurrencies) {
+        
+        let updatedBalance = UserBalance()
+        updatedBalance.numberOfExchange = userBalance.numberOfExchange
+        updatedBalance.numberOfExchange += numberOfexchange
+        updatedBalance.id = userBalance.id
+        updatedBalance.currencies.append(balance)
+        
+        do {
+            let realm = try Realm()
+            
+            try realm.write {
+                realm.add(updatedBalance, update: .modified)
+            }
+        } catch {
+            print("error happend while updating User Balance")
+        }
+    }
 }
 
 class UserCurrencies: Object {
-    @Persisted var Symbol: String
+    
+    @Persisted var id: String
+    @Persisted var Symbol: CurrencySymbol
     @Persisted var Amount: Double
     
     @Persisted(originProperty: "currencies") var assignee: LinkingObjects<UserBalance>
     
-    convenience init(symbol: String, amount: Double) {
+    convenience init(symbol: CurrencySymbol, amount: Double) {
         self.init()
+        self.id = UUID().uuidString
         self.Symbol = symbol
         self.Amount = amount
+    }
+    
+    override class func primaryKey() -> String? {
+        "id"
     }
     
 }

@@ -6,8 +6,9 @@
 //
 
 import Foundation
+import RealmSwift
 
-enum CurrencySymbol: String, CaseIterable {
+enum CurrencySymbol: String, CaseIterable, PersistableEnum {
     case EUR
     case USD
     case JPY

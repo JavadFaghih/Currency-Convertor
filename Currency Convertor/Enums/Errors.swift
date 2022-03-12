@@ -9,26 +9,21 @@ import Foundation
 import SwiftUI
 
 enum Errors: Error {
-   
+    
     case noInternet
     case invalidInput
-    case JPY
-    case USD
-    case EUR
+    case noEnoughCurrency
     
     var description: String {
+      
         switch self {
         case .noInternet:
             return "the Internet connection appears to be oflline"
         case .invalidInput:
             return "sorry your request is invalid"
-        case .JPY:
-            return "you do not have enough \(self) currency"
-        case .USD:
-            return "you do not have enough \(self) currency"
-        case .EUR:
-            return "you do not have enough \(self) currency"
+        case .noEnoughCurrency:
+            return "you do not have enough currency"
+            
         }
     }
-    
 }
