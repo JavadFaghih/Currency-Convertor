@@ -12,7 +12,7 @@ import RealmSwift
 protocol MaininteractorDelegate {
     func presentError(message: String)
     func presentMyBalances(balance: UserBalance)
-    func presentExchangeResult(_ result: Main.Models.ExchangeResponse)
+    func presentExchangeResult(_ request: Main.Models.Request,_ result: Main.Models.ExchangeResponse, fee: Double)
     func presentTotalCommision(comission: Double)
 }
 
@@ -38,20 +38,25 @@ class MainInteractor: NSObject, MainInteractorInput, MainDataStore {
     
     private var currencies: [UserCurrencies]! //initials symbols
     private var balances: UserBalance! //get value from database
+    private var freeRequestCount: Int {
+        get {
+            5
+        }
+    }
     
     //MARK: - ViewController delegate methods
     func viewDidload() {
         worker = MainAPIWorker()
-    
+        
         if isFirstRun {
             
             //if you need more currency just write it here to this balance and remove the app from simulator
             currencies = [UserCurrencies(symbol: CurrencySymbol.JPY, amount: 0),
-                       UserCurrencies(symbol: CurrencySymbol.EUR, amount: 0),
-                       UserCurrencies(symbol: CurrencySymbol.USD, amount: 1000) ]
+                          UserCurrencies(symbol: CurrencySymbol.EUR, amount: 0),
+                          UserCurrencies(symbol: CurrencySymbol.USD, amount: 1000) ]
             
             self.balances =  UserBalance(numberOfExchange: 0, balances: currencies)
-            DBManager.instance.save(object: balances)
+            UserBalance.save(object: balances)
             isFirstRun = false
         }
         
@@ -63,7 +68,7 @@ class MainInteractor: NSObject, MainInteractorInput, MainDataStore {
     func requestForExchange(_ requestModel: Main.Models.Request) {
         
         do {
-            try handleErrors(userRequest: requestModel , currenciesBalance: balances.currencies, numberOfExchange: balances.numberOfExchange)
+            try handleErrors(userRequest: requestModel, currenciesBalance: balances.currencies, numberOfExchange: balances.numberOfExchange)
             self.request(requestModel)
         } catch Errors.invalidInput {
             presenter?.presentError(message: Errors.invalidInput.description)
@@ -84,32 +89,34 @@ class MainInteractor: NSObject, MainInteractorInput, MainDataStore {
     
     //MARK: - Internal methods
     private func request(_ requsetModel: Main.Models.Request)  {
-    
-            worker.exhangeRequest(fromAmount: requsetModel.fromAmount, fromCurrency: requsetModel.fromCurrency, toCurrency: requsetModel.toCurrency) { [unowned self] exchange, error in
-                
-                if let exchange = exchange {
-              
-                    //update exchange localy
-                    UserBalance.update(userBalance: balances,
-                                       numberOfExchange: 1,
-                                       fromAmount: requsetModel.fromAmount,
-                                       fromcurrency: requsetModel.fromCurrency,
-                                       toAmount: Double(exchange.amount) ?? 0,
-                                       toCurrency: CurrencySymbol(rawValue: exchange.currency) ?? .USD)
-                    
-                    balances = UserBalance.getInfo()
-                    presenter?.presentMyBalances(balance: balances)
-                    
-                    //present exchange request result to user
-                    self.presenter?.presentExchangeResult(exchange)
-                   
-                } else if error != nil {
-                    self.presenter?.presentError(message: error!)
-                } else {
-                    self.presenter?.presentError(message: "sorry something went wrong...")
-                }
-            }
         
+        let comission = balances.numberOfExchange < freeRequestCount ? 0 : (requsetModel.fromAmount * 0.07)
+
+        worker.exhangeRequest(requsetModel) { [unowned self] exchange, error in
+            
+            if let exchange = exchange {
+                
+                //update exchange localy
+                                
+                UserBalance.update(numberOfExchange: 1,
+                                   fromAmount: requsetModel.fromAmount,
+                                   fromcurrency: requsetModel.fromCurrency,
+                                   toAmount: Double(exchange.amount) ?? 0,
+                                   toCurrency: CurrencySymbol(rawValue: exchange.currency) ?? .USD,
+                                   commistion: comission )
+                
+                balances = UserBalance.getInfo()
+                presenter?.presentMyBalances(balance: balances)
+                
+                //present exchange request result to user
+                self.presenter?.presentExchangeResult(requsetModel, exchange, fee: comission)
+                
+            } else if error != nil {
+                self.presenter?.presentError(message: error!)
+            } else {
+                self.presenter?.presentError(message: "sorry something went wrong...")
+            }
+        }
     }
     
     private func handleErrors(userRequest: Main.Models.Request, currenciesBalance: List<UserCurrencies>, numberOfExchange: Int) throws {
@@ -122,27 +129,21 @@ class MainInteractor: NSObject, MainInteractorInput, MainDataStore {
         let requestSymbol: String = userRequest.fromCurrency.rawValue
         var requestAmount: Double {
             get {
-              return  numberOfExchange <= 5 ? userRequest.fromAmount : (userRequest.fromAmount + fee)
+                return  numberOfExchange < freeRequestCount ? userRequest.fromAmount : (userRequest.fromAmount + fee)
             }
         }
-        
         var balanceAmount: Double = 0
         
         if let balanceAmountIndex = currenciesBalance.firstIndex(where: {$0.Symbol.rawValue == requestSymbol}){
-            
             balanceAmount = currenciesBalance[balanceAmountIndex].Amount
         }
-
+        
         if currentReachabilityStatus == .notReachable {
             throw Errors.noInternet
         } else if requestAmount <= 0 {
             throw Errors.invalidInput
-        } else if requestAmount > balanceAmount && numberOfExchange <= 5 {
-            throw Errors.noEnoughCurrency
-        } else if numberOfExchange > 5 && (requestAmount + fee) > balanceAmount {
-            //no enough currency
+        } else if requestAmount > balanceAmount {
             throw Errors.noEnoughCurrency
         }
-
     }
 }

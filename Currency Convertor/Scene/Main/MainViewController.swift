@@ -102,7 +102,6 @@ class MainViewController: UIViewController {
         interactor?.getTotalComission()
     }
     
-    
     //MARK: - Methods
     private func configPickerView() {
         sellPickerView = UIPickerView()
@@ -159,13 +158,16 @@ extension MainViewController: MainViewControllerInput {
     func displayError(message: String) {
         alert(message: message)
         DispatchQueue.main.async {
+            self.buyAmountField.text = ""
             self.submitBuuton.isEnabled = true
         }
     }
     
-    func updateUI(recieveAmount: String) {
+    func updateUI(recieveAmount: String, dialogMessage: String) {
+     
         DispatchQueue.main.async {
             self.buyAmountField.text = recieveAmount
+            self.alert(title: "Currency converted", message: dialogMessage)
             self.submitBuuton.isEnabled = true
         }
     }

@@ -13,7 +13,7 @@ protocol MainPresenterDelegate: AnyObject {
  
     func displayError(message: String)
     func displayBalanceItem(_ items: [Main.Models.ViewModel])
-    func updateUI(recieveAmount: String)
+    func updateUI(recieveAmount: String, dialogMessage: String)
     func displayTotalCommissions(_ comission: String)
 }
 
@@ -29,23 +29,25 @@ class MainPresenter: MainPresenterInput {
     
     func presentMyBalances(balance: UserBalance) {
         
-            
             var balances: [Main.Models.ViewModel] = []
             
             for currency in balance.currencies {
                 
+                defer {
+                    viewController?.displayBalanceItem(balances)
+                }
+                
                 balances.append(Main.Models.ViewModel(amount: String(format: "%.2f", currency.Amount), symbol: currency.Symbol.rawValue))
             }
-            
-            viewController?.displayBalanceItem(balances)
     }
     
-    func presentExchangeResult(_ result: Main.Models.ExchangeResponse) {
+    func presentExchangeResult(_ request: Main.Models.Request, _ result: Main.Models.ExchangeResponse, fee: Double) {
         let amount = "+ \(result.amount)"
-        viewController?.updateUI(recieveAmount: amount)
+        viewController?.updateUI(recieveAmount: amount,
+                                 dialogMessage: "You have converted \(request.fromAmount) \(request.fromCurrency) to \(result.amount) \(result.currency). Commission Fee - \(String(format: "%.2f", fee)) \(request.fromCurrency).")
     }
     
     func presentTotalCommision(comission: Double) {
-        viewController?.displayTotalCommissions("You have already paid \(comission) commissions")
+        viewController?.displayTotalCommissions("You have already paid \(String(format: "%.2f", comission)) commissions")
     }
 }
