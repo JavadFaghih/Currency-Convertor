@@ -63,19 +63,30 @@ class UserBalance: Object {
         }
     }
     
-    static func update(userBalance: UserBalance, numberOfexchange: Int, balance: UserCurrencies) {
+    static func update(userBalance: UserBalance,
+                       numberOfExchange: Int,
+                       fromAmount: Double,
+                       fromcurrency: CurrencySymbol,
+                       toAmount: Double,
+                       toCurrency: CurrencySymbol,
+                       commistion: Double = 0) {
         
-        let updatedBalance = UserBalance()
-        updatedBalance.numberOfExchange = userBalance.numberOfExchange
-        updatedBalance.numberOfExchange += numberOfexchange
-        updatedBalance.id = userBalance.id
-        updatedBalance.currencies.append(balance)
+       
         
         do {
             let realm = try Realm()
+            let object = realm.objects(UserBalance.self).last
+            
             
             try realm.write {
-                realm.add(updatedBalance, update: .modified)
+                object?.numberOfExchange += 1
+                object?.totalComission += commistion
+                if let fromCurrencyIndex = object?.currencies.firstIndex(where: {$0.Symbol == fromcurrency}) {
+                    object?.currencies[fromCurrencyIndex].Amount -= (fromAmount + commistion)
+                }
+                if let toCurrencyIndex = object?.currencies.firstIndex(where: {$0.Symbol == toCurrency}) {
+                    object?.currencies[toCurrencyIndex].Amount += toAmount
+                }
             }
         } catch {
             print("error happend while updating User Balance")

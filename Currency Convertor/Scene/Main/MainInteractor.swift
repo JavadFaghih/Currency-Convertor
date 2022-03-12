@@ -13,6 +13,7 @@ protocol MaininteractorDelegate {
     func presentError(message: String)
     func presentMyBalances(balance: UserBalance)
     func presentExchangeResult(_ result: Main.Models.ExchangeResponse)
+    func presentTotalCommision(comission: Double)
 }
 
 protocol MainDataStore {
@@ -35,9 +36,8 @@ class MainInteractor: NSObject, MainInteractorInput, MainDataStore {
         }
     }
     
-    private var currencies: [UserCurrencies]! //initial symbols
+    private var currencies: [UserCurrencies]! //initials symbols
     private var balances: UserBalance! //get value from database
-    private var requestModel: Main.Models.Request! //user input
     
     //MARK: - ViewController delegate methods
     func viewDidload() {
@@ -57,14 +57,12 @@ class MainInteractor: NSObject, MainInteractorInput, MainDataStore {
         
         //get latest currencies from DB and present in collection view
         balances = UserBalance.getInfo()
-        
         presenter?.presentMyBalances(balance: balances)
     }
     
     func requestForExchange(_ requestModel: Main.Models.Request) {
         
         do {
-            print(balances.numberOfExchange)
             try handleErrors(userRequest: requestModel , currenciesBalance: balances.currencies, numberOfExchange: balances.numberOfExchange)
             self.request(requestModel)
         } catch Errors.invalidInput {
@@ -78,19 +76,26 @@ class MainInteractor: NSObject, MainInteractorInput, MainDataStore {
         }
     }
     
+    func getTotalComission() {
+        
+        presenter?.presentTotalCommision(comission: balances.totalComission)
+    }
+    
     
     //MARK: - Internal methods
     private func request(_ requsetModel: Main.Models.Request)  {
     
-            worker.exhangeRequest(fromAmount: requsetModel.fromAmount, fromCurrency: requestModel.fromCurrency, toCurrency: requestModel.toCurrency) { [unowned self] exchange, error in
+            worker.exhangeRequest(fromAmount: requsetModel.fromAmount, fromCurrency: requsetModel.fromCurrency, toCurrency: requsetModel.toCurrency) { [unowned self] exchange, error in
                 
                 if let exchange = exchange {
               
                     //update exchange localy
                     UserBalance.update(userBalance: balances,
-                                       numberOfexchange: 1,
-                                       balance: UserCurrencies(symbol: CurrencySymbol(rawValue: exchange.currency) ?? .USD,
-                                                               amount: Double(exchange.amount) ?? 0))
+                                       numberOfExchange: 1,
+                                       fromAmount: requsetModel.fromAmount,
+                                       fromcurrency: requsetModel.fromCurrency,
+                                       toAmount: Double(exchange.amount) ?? 0,
+                                       toCurrency: CurrencySymbol(rawValue: exchange.currency) ?? .USD)
                     
                     balances = UserBalance.getInfo()
                     presenter?.presentMyBalances(balance: balances)
@@ -111,11 +116,16 @@ class MainInteractor: NSObject, MainInteractorInput, MainDataStore {
         
         var fee: Double {
             get {
-                requestAmount * 0.7
+                userRequest.fromAmount * 0.07
             }
         }
         let requestSymbol: String = userRequest.fromCurrency.rawValue
-        let requestAmount: Double = userRequest.fromAmount
+        var requestAmount: Double {
+            get {
+              return  numberOfExchange <= 5 ? userRequest.fromAmount : (userRequest.fromAmount + fee)
+            }
+        }
+        
         var balanceAmount: Double = 0
         
         if let balanceAmountIndex = currenciesBalance.firstIndex(where: {$0.Symbol.rawValue == requestSymbol}){
@@ -136,5 +146,3 @@ class MainInteractor: NSObject, MainInteractorInput, MainDataStore {
 
     }
 }
-
-

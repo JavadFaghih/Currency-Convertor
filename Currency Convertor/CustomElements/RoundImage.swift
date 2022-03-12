@@ -12,14 +12,12 @@ class RoundImage: UIImageView {
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        commenInit()
     }
     
     
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-commenInit()
     }
     
     override func layoutSubviews() {
@@ -29,7 +27,6 @@ commenInit()
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        commenInit()
     }
     
     private func commenInit() {

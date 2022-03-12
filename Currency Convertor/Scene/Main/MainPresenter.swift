@@ -14,6 +14,7 @@ protocol MainPresenterDelegate: AnyObject {
     func displayError(message: String)
     func displayBalanceItem(_ items: [Main.Models.ViewModel])
     func updateUI(recieveAmount: String)
+    func displayTotalCommissions(_ comission: String)
 }
 
 typealias MainPresenterInput = MaininteractorDelegate
@@ -33,7 +34,7 @@ class MainPresenter: MainPresenterInput {
             
             for currency in balance.currencies {
                 
-                balances.append(Main.Models.ViewModel(amount: String(currency.Amount), symbol: currency.Symbol.rawValue))
+                balances.append(Main.Models.ViewModel(amount: String(format: "%.2f", currency.Amount), symbol: currency.Symbol.rawValue))
             }
             
             viewController?.displayBalanceItem(balances)
@@ -44,4 +45,7 @@ class MainPresenter: MainPresenterInput {
         viewController?.updateUI(recieveAmount: amount)
     }
     
+    func presentTotalCommision(comission: Double) {
+        viewController?.displayTotalCommissions("You have already paid \(comission) commissions")
+    }
 }

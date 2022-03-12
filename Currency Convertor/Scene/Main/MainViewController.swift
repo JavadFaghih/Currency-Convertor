@@ -11,6 +11,7 @@ protocol MainViewControllerDelegate {
     
     func viewDidload()
     func requestForExchange(_ requestModel: Main.Models.Request)
+    func getTotalComission()
 }
 
 typealias MainViewControllerInput = MainPresenterDelegate
@@ -96,6 +97,12 @@ class MainViewController: UIViewController {
         submitBuuton.isEnabled = false
     }
     
+    @IBAction func infoButtonPressed(_ sender: Any) {
+        
+        interactor?.getTotalComission()
+    }
+    
+    
     //MARK: - Methods
     private func configPickerView() {
         sellPickerView = UIPickerView()
@@ -151,11 +158,9 @@ extension MainViewController: MainViewControllerInput {
     
     func displayError(message: String) {
         alert(message: message)
-      
         DispatchQueue.main.async {
             self.submitBuuton.isEnabled = true
         }
-        
     }
     
     func updateUI(recieveAmount: String) {
@@ -163,6 +168,10 @@ extension MainViewController: MainViewControllerInput {
             self.buyAmountField.text = recieveAmount
             self.submitBuuton.isEnabled = true
         }
+    }
+    
+    func displayTotalCommissions(_ comission: String) {
+        self.alert(message: comission)
     }
 }
 
