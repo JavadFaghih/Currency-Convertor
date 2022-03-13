@@ -126,20 +126,17 @@ class MainViewController: UIViewController {
         receiveCurrencySymbolField.text = CurrenySymbolls[0]
         sellAmountField.delegate = self
     }
-    
     private func configCollectionView() {
         let myBallanceCell = UINib(nibName: "MyBallanceCollectionViewCell", bundle: Bundle.main)
         collectionView.register(myBallanceCell, forCellWithReuseIdentifier: MyBallanceCollectionViewCell.reuseIdentifier)
         collectionView.backgroundColor = .white
     }
-    
     private func alert(title: String = "Oops!", message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let done = UIAlertAction(title: "Done", style: .default)
         alert.addAction(done)
         self.present(alert, animated: true)
     }
-    
     private func configNavBar() {
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()

@@ -20,6 +20,4 @@ class MyBallanceCollectionViewCell: UICollectionViewCell {
             symbolLabel.text = myBallance?.symbol ?? ""
         }
     }
-    
-
 }

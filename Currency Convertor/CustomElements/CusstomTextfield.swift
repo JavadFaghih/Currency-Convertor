@@ -39,7 +39,6 @@ class CustomTextfield: UITextField {
             }
         }
         
-        
         view.frame = CGRect(x: viewXPosition, y: 0, width: viewWidth, height: viewWidth)
         let label = UILabel()
         label.frame = CGRect(x: 0, y: 0, width: viewWidth, height: viewWidth)
@@ -65,7 +64,6 @@ class CustomTextfield: UITextField {
                 self.frame.size.height
             }
         }
-        
         
         view.frame = CGRect(x: 0, y: 0, width: viewWidth, height: viewHeight)
         let label = UILabel()
@@ -99,13 +97,10 @@ class CustomTextfield: UITextField {
             }
         }
         
-        
-        
         view.frame = CGRect(x: viewXPosition, y: 0, width: viewWidth, height: viewHeight)
         view.clipsToBounds = true
         let imageView = UIImageView()
         imageView.frame = CGRect(x: 0, y: 0, width: viewWidth, height: viewHeight)
-      //  imageView.center = view.center
         imageView.image = image
         imageView.contentMode = .center
         view.addSubview(imageView)

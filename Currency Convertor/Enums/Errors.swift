@@ -18,7 +18,7 @@ enum Errors: Error {
       
         switch self {
         case .noInternet:
-            return "the Internet connection appears to be oflline"
+            return "the Internet connection appears to be offline"
         case .invalidInput:
             return "sorry your request is invalid"
         case .noEnoughCurrency:
