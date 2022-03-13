@@ -25,6 +25,8 @@ class MainViewController: UIViewController {
     @IBOutlet weak var submitBuuton: UIButton!
     @IBOutlet weak var sellCurrencySymbolField: CustomTextfield!
     @IBOutlet weak var receiveCurrencySymbolField: CustomTextfield!
+    @IBOutlet weak var sellImageView: RoundImage!
+    @IBOutlet weak var recieveImageView: RoundImage!
     
     //MARK: - Vars
     var interactor: MainViewControllerDelegate?
@@ -65,6 +67,7 @@ class MainViewController: UIViewController {
         hiddenKeyboardWhenTapRound()
         configNavBar()
         prepareTextFields()
+       
     }
     
     override func viewDidLayoutSubviews() {
@@ -127,7 +130,7 @@ class MainViewController: UIViewController {
     private func configCollectionView() {
         let myBallanceCell = UINib(nibName: "MyBallanceCollectionViewCell", bundle: Bundle.main)
         collectionView.register(myBallanceCell, forCellWithReuseIdentifier: MyBallanceCollectionViewCell.reuseIdentifier)
-        
+        collectionView.backgroundColor = .white
     }
     
     private func alert(title: String = "Oops!", message: String) {
@@ -178,7 +181,7 @@ extension MainViewController: MainViewControllerInput {
 }
 
 //MARK: - CollectionViewDelegate
-extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         self.balances.count
@@ -219,6 +222,7 @@ extension MainViewController: UIPickerViewDelegate, UIPickerViewDataSource {
             sellCurrencySymbolField.text = CurrenySymbolls[row]
         } else {
             receiveCurrencySymbolField.text = CurrenySymbolls[row]
+            buyAmountField.text = ""
         }
     }
 }

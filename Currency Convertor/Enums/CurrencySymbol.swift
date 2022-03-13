@@ -12,4 +12,7 @@ enum CurrencySymbol: String, CaseIterable, PersistableEnum {
     case EUR
     case USD
     case JPY
+    case IRT
+    case BTCN
+    case BITN
 }

@@ -14,4 +14,17 @@ extension UIImage {
             UIImage(named: "pullDown") ?? UIImage()
         }
     }
+    
+    open class var recieveImage: UIImage {
+        get {
+            UIImage(named: "recieveImage") ?? UIImage()
+        }
+    }
+    
+    open class var sellImage: UIImage {
+        get {
+            UIImage(named: "sellImage") ?? UIImage()
+        }
+    }
+    
 }

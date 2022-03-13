@@ -53,7 +53,10 @@ class MainInteractor: NSObject, MainInteractorInput, MainDataStore {
             //if you need more currency just write it here to this balance and remove the app from simulator
             currencies = [UserCurrencies(symbol: CurrencySymbol.JPY, amount: 0),
                           UserCurrencies(symbol: CurrencySymbol.EUR, amount: 0),
-                          UserCurrencies(symbol: CurrencySymbol.USD, amount: 1000) ]
+                          UserCurrencies(symbol: CurrencySymbol.USD, amount: 1000),
+                          UserCurrencies(symbol: .IRT, amount: 0),
+                          UserCurrencies(symbol:.BITN, amount: 0),
+                          UserCurrencies(symbol: .BTCN, amount: 1000) ]
             
             self.balances =  UserBalance(numberOfExchange: 0, balances: currencies)
             UserBalance.save(object: balances)
